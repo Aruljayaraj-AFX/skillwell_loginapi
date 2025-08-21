@@ -9,7 +9,7 @@ class user_login:
             session.close()
             pas = password
             if pas == result.password:
-                    return "successfully login"
+                    return {"message": "successfully login"}
             else:
                 return "invalid password"
         except Exception as e:
