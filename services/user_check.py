@@ -28,3 +28,18 @@ class user_add:
             except Exception as e:
                 session.rollback()  
                 raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+
+class pass_change:
+     def __call__(self, email_id:str,new_password:str):
+        user = session.query(users).filter(users.user_email == email_id).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="No matching user found.")
+        try:
+            user.password=new_password
+            session.commit() 
+            session.close()
+            return "successfully_changed"
+        except Exception as e:
+            session.rollback()
+            raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        
