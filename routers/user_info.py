@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException,Depends,Query
-from services.user_check import user_login,user_add,pass_change
+from services.user_check import user_login,user_add,pass_change,c_Authorization
 
 router= APIRouter()
 
@@ -14,3 +14,7 @@ async def add_user(adduser:str=Depends(user_add())):
 @router.put("/password_change")
 async def pass_ch(newpass:str=Depends(pass_change())):
     return newpass
+
+@router.get("/u_security_checku/")
+async def read(token: object = Depends(c_Authorization())):
+    return token 
